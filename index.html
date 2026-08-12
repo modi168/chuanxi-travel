@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>川西旅行路线图鉴 · 插画风</title>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --green-deep: #1B4332;
+    --green-mid: #2D6A4F;
+    --green-light: #52B788;
+    --green-pale: #B7E4C7;
+    --orange: #F4A261;
+    --coral: #E76F51;
+    --sky: #A8DADC;
+    --sky-deep: #457B9D;
+    --cream: #FFF8F0;
+    --paper: #FFFCF5;
+    --shadow: 0 4px 20px rgba(45, 106, 79, 0.15);
+    --shadow-hover: 0 8px 30px rgba(45, 106, 79, 0.25);
+  }
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: linear-gradient(160deg, #E8F5E9 0%, #FFF3E0 40%, #E3F2FD 100%);
+    color: var(--green-deep);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== 顶部 Banner ===== */
+  .banner {
+    position: relative;
+    height: 420px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #C6E6F0 0%, #B8E0D2 40%, #D4E9C5 70%, #F0E6D2 100%);
+  }
+  .banner-svg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .banner-title {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding-top: 60px;
+  }
+  .banner-title h1 {
+    font-family: 'ZCOOL KuaiLe', cursive;
+    font-size: 52px;
+    color: var(--green-deep);
+    text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+    letter-spacing: 4px;
+  }
+  .banner-title p {
+    font-size: 16px;
+    color: var(--green-mid);
+    margin-top: 8px;
+    letter-spacing: 2px;
+  }
+  .banner-title .tag-line {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 6px 24px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 30px;
+    font-size: 14px;
+    color: var(--green-mid);
+    border: 1.5px dashed var(--green-light);
+  }
+
+  /* ===== 主容器 ===== */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ===== 路线标签 ===== */
+  .route-tabs {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin: -40px 0 30px;
+    position: relative;
+    z-index: 10;
+    flex-wrap: wrap;
+  }
+  .route-tab {
+    padding: 12px 28px;
+    background: var(--paper);
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--green-mid);
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    user-select: none;
+  }
+  .route-tab:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+  .route-tab.active {
+    background: var(--green-mid);
+    color: white;
+    border-color: var(--green-light);
+  }
+  .route-tab .tab-icon { margin-right: 6px; }
+
+  /* ===== 路线信息栏 ===== */
+  .route-info-bar {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+  .info-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 12px;
+    font-size: 14px;
+    color: var(--green-mid);
+    border: 1px solid var(--green-pale);
+  }
+  .info-chip .chip-label { font-weight: 700; color: var(--coral); }
+
+  /* ===== 旅行点列表 ===== */
+  .points-section { margin-bottom: 40px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .section-header h2 {
+    font-family: 'ZCOOL KuaiLe', cursive;
+    font-size: 28px;
+    color: var(--green-deep);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-add {
+    padding: 10px 22px;
+    background: var(--coral);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(231,111,81,0.3);
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+  .btn-add:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(231,111,81,0.4); background: #D55A3E; }
+
+  .points-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  .point-card {
+    background: var(--paper);
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    position: relative;
+    border: 2px solid transparent;
+    overflow: hidden;
+  }
+  .point-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 6px;
+    background: linear-gradient(90deg, var(--green-light), var(--orange), var(--coral));
+  }
+  .point-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--green-pale);
+  }
+  .point-card .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  .point-card .point-name {
+    font-family: 'ZCOOL KuaiLe', cursive;
+    font-size: 22px;
+    color: var(--green-deep);
+  }
+  .point-card .point-emoji {
+    font-size: 28px;
+    line-height: 1;
+  }
+  .point-card .point-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 14px;
+  }
+  .point-card .point-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .point-tag {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .tag-alt { background: #E3F2FD; color: var(--sky-deep); }
+  .tag-time { background: #FFF3E0; color: #E65100; }
+  .tag-type { background: var(--green-pale); color: var(--green-deep); }
+  .point-card .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1.5px dashed var(--green-pale);
+  }
+  .point-card .route-order {
+    font-size: 13px;
+    color: var(--green-light);
+    font-weight: 500;
+  }
+  .btn-delete {
+    padding: 5px 14px;
+    background: rgba(231,111,81,0.1);
+    color: var(--coral);
+    border: 1.5px solid rgba(231,111,81,0.3);
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+  .btn-delete:hover { background: var(--coral); color: white; border-color: var(--coral); }
+
+  /* ===== 添加表单模态框 ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(27,67,50,0.4);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: var(--paper);
+    border-radius: 20px;
+    padding: 36px;
+    width: 90%;
+    max-width: 480px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    position: relative;
+    animation: modalIn 0.3s ease;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .modal h3 {
+    font-family: 'ZCOOL KuaiLe', cursive;
+    font-size: 24px;
+    color: var(--green-deep);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block;
+    font-size: 14px;
+    color: var(--green-mid);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid var(--green-pale);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Noto Sans SC', sans-serif;
+    background: white;
+    color: var(--green-deep);
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--green-light);
+  }
+  .form-group textarea { resize: vertical; min-height: 70px; }
+  .form-row { display: flex; gap: 12px; }
+  .form-row .form-group { flex: 1; }
+  .emoji-picker {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .emoji-option {
+    font-size: 24px;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .emoji-option:hover { background: var(--green-pale); }
+  .emoji-option.selected {
+    border-color: var(--green-light);
+    background: var(--green-pale);
+  }
+  .modal-btns {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .btn-cancel {
+    flex: 1;
+    padding: 12px;
+    background: #F0F0F0;
+    color: #666;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    font-family: 'Noto Sans SC', sans-serif;
+    transition: background 0.2s;
+  }
+  .btn-cancel:hover { background: #E0E0E0; }
+  .btn-confirm {
+    flex: 1;
+    padding: 12px;
+    background: var(--green-mid);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    font-family: 'Noto Sans SC', sans-serif;
+    transition: background 0.2s;
+  }
+  .btn-confirm:hover { background: var(--green-deep); }
+
+  /* ===== 攻略区域 ===== */
+  .guide-section {
+    margin-bottom: 50px;
+  }
+  .guide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .guide-card {
+    background: var(--paper);
+    border-radius: 18px;
+    padding: 26px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .guide-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 5px; height: 100%;
+  }
+  .guide-card.g1::before { background: var(--green-light); }
+  .guide-card.g2::before { background: var(--orange); }
+  .guide-card.g3::before { background: var(--coral); }
+  .guide-card.g4::before { background: var(--sky-deep); }
+  .guide-card h3 {
+    font-family: 'ZCOOL KuaiLe', cursive;
+    font-size: 20px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .guide-card ul { list-style: none; }
+  .guide-card ul li {
+    padding: 8px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444;
+    border-bottom: 1px dashed #E0E0E0;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .guide-card ul li:last-child { border-bottom: none; }
+  .guide-card ul li .li-icon { flex-shrink: 0; }
+
+  /* ===== 路线图 ===== */
+  .route-map-section {
+    margin-bottom: 50px;
+    background: var(--paper);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+  }
+  .route-map-section h2 {
+    font-family: 'ZCOOL KuaiLe', cursive;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: var(--green-deep);
+    text-align: center;
+  }
+  .route-flow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;
+    padding: 10px 0;
+  }
+  .flow-node {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, var(--green-light), var(--green-mid));
+    color: white;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 3px 8px rgba(45,106,79,0.2);
+    transition: transform 0.2s;
+  }
+  .flow-node:hover { transform: scale(1.05); }
+  .flow-arrow {
+    color: var(--orange);
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  /* ===== 底部 ===== */
+  .footer {
+    text-align: center;
+    padding: 30px 20px 40px;
+    color: var(--green-mid);
+    font-size: 14px;
+  }
+  .footer .footer-decoration {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  /* ===== Toast 提示 ===== */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--green-deep);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-size: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 200;
+  }
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  /* ===== 空状态 ===== */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--green-mid);
+  }
+  .empty-state .empty-icon {
+    font-size: 60px;
+    margin-bottom: 16px;
+  }
+  .empty-state p { font-size: 16px; margin-bottom: 8px; }
+  .empty-state .empty-hint { font-size: 13px; color: #999; }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 600px) {
+    .banner-title h1 { font-size: 36px; }
+    .section-header h2 { font-size: 22px; }
+    .points-list { grid-template-columns: 1fr; }
+    .route-tab { padding: 10px 18px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== Banner ===== -->
+<div class="banner">
+  <svg class="banner-svg" viewBox="0 0 1440 420" preserveAspectRatio="xMidYMax slice">
+    <!-- 太阳 -->
+    <circle cx="1150" cy="100" r="50" fill="#FFE0B2" opacity="0.8"/>
+    <circle cx="1150" cy="100" r="38" fill="#FFCC80" opacity="0.7"/>
+    <!-- 云朵 -->
+    <ellipse cx="200" cy="70" rx="60" ry="22" fill="white" opacity="0.7"/>
+    <ellipse cx="240" cy="65" rx="40" ry="18" fill="white" opacity="0.6"/>
+    <ellipse cx="700" cy="50" rx="80" ry="25" fill="white" opacity="0.5"/>
+    <ellipse cx="730" cy="58" rx="50" ry="20" fill="white" opacity="0.4"/>
+    <ellipse cx="1050" cy="160" rx="50" ry="16" fill="white" opacity="0.5"/>
+    <!-- 远山 -->
+    <path d="M0,280 L120,200 L200,240 L320,160 L420,220 L500,180 L600,250 L720,170 L820,230 L920,190 L1000,260 L1100,200 L1200,250 L1300,190 L1440,240 L1440,420 L0,420 Z" fill="#52B788" opacity="0.4"/>
+    <!-- 中山 -->
+    <path d="M0,340 L100,260 L180,300 L280,220 L360,280 L440,230 L520,310 L640,240 L740,300 L860,250 L960,320 L1080,260 L1180,310 L1300,250 L1440,300 L1440,420 L0,420 Z" fill="#2D6A4F" opacity="0.5"/>
+    <!-- 近山 -->
+    <path d="M0,400 L80,330 L160,370 L260,300 L340,360 L440,310 L540,380 L660,320 L780,370 L900,310 L1000,380 L1120,330 L1220,380 L1340,320 L1440,370 L1440,420 L0,420 Z" fill="#1B4332" opacity="0.6"/>
+    <!-- 小树 -->
+    <g opacity="0.6">
+      <circle cx="60" cy="385" r="12" fill="#2D6A4F"/>
+      <rect x="57" y="390" width="6" height="12" fill="#5D4037"/>
+      <circle cx="120" cy="390" r="10" fill="#2D6A4F"/>
+      <rect x="117" y="395" width="6" height="10" fill="#5D4037"/>
+      <circle cx="380" cy="385" r="14" fill="#2D6A4F"/>
+      <rect x="376" y="392" width="8" height="12" fill="#5D4037"/>
+      <circle cx="650" cy="390" r="11" fill="#2D6A4F"/>
+      <rect x="647" y="395" width="6" height="10" fill="#5D4037"/>
+      <circle cx="900" cy="385" r="13" fill="#2D6A4F"/>
+      <rect x="896" y="392" width="8" height="12" fill="#5D4037"/>
+      <circle cx="1200" cy="390" r="12" fill="#2D6A4F"/>
+      <rect x="1197" y="395" width="6" height="10" fill="#5D4037"/>
+    </g>
+    <!-- 帐篷 -->
+    <g transform="translate(500,360)">
+      <path d="M0,40 L25,0 L50,40 Z" fill="#E76F51" opacity="0.8"/>
+      <path d="M25,0 L25,40 L50,40 Z" fill="#D55A3E" opacity="0.8"/>
+      <rect x="20" y="25" width="10" height="15" fill="#FFE0B2"/>
+    </g>
+    <!-- 飞鸟 -->
+    <path d="M400,90 Q405,85 410,90 Q415,85 420,90" stroke="#555" stroke-width="2" fill="none" opacity="0.5"/>
+    <path d="M440,110 Q445,105 450,110 Q455,105 460,110" stroke="#555" stroke-width="2" fill="none" opacity="0.5"/>
+    <path d="M800,120 Q805,115 810,120 Q815,115 820,120" stroke="#555" stroke-width="2" fill="none" opacity="0.5"/>
+  </svg>
+  <div class="banner-title">
+    <h1>川西旅行路线图鉴</h1>
+    <p>雪山 · 草甸 · 海子 · 佛国</p>
+    <div class="tag-line">自由编辑你的川西之旅</div>
+  </div>
+</div>
+
+<div class="container">
+  <!-- ===== 路线选择 ===== -->
+  <div class="route-tabs">
+    <div class="route-tab active" data-route="small" onclick="switchRoute('small')">
+      <span class="tab-icon">🏔️</span>经典小环线
+    </div>
+    <div class="route-tab" data-route="large" onclick="switchRoute('large')">
+      <span class="tab-icon">🗺️</span>经典大环线
+    </div>
+    <div class="route-tab" data-route="custom" onclick="switchRoute('custom')">
+      <span class="tab-icon">✨</span>我的路线
+    </div>
+  </div>
+
+  <!-- ===== 路线信息 ===== -->
+  <div class="route-info-bar" id="routeInfoBar"></div>
+
+  <!-- ===== 路线流程图 ===== -->
+  <div class="route-map-section">
+    <h2>🧭 路线一览</h2>
+    <div class="route-flow" id="routeFlow"></div>
+  </div>
+
+  <!-- ===== 旅行点列表 ===== -->
+  <div class="points-section">
+    <div class="section-header">
+      <h2>📍 旅行点</h2>
+      <button class="btn-add" onclick="openAddModal()">+ 添加旅行点</button>
+    </div>
+    <div class="points-list" id="pointsList"></div>
+  </div>
+
+  <!-- ===== 攻略汇总 ===== -->
+  <div class="guide-section">
+    <div class="section-header">
+      <h2>📖 攻略汇总</h2>
+    </div>
+    <div class="guide-grid">
+      <div class="guide-card g1">
+        <h3>🎒 行前准备</h3>
+        <ul>
+          <li><span class="li-icon">🪪</span>身份证、学生证（部分景区半价）</li>
+          <li><span class="li-icon">🧥</span>冲锋衣、羽绒服（早晚温差大）</li>
+          <li><span class="li-icon">🕶️</span>墨镜、防晒衣、SPF50+防晒霜</li>
+          <li><span class="li-icon">💊</span>红景天（出发前一周服用）、葡萄糖、感冒药</li>
+          <li><span class="li-icon">🔋</span>充电宝、保温杯、唇膏</li>
+          <li><span class="li-icon">💵</span>备部分现金，偏远地区信号差</li>
+        </ul>
+      </div>
+      <div class="guide-card g2">
+        <h3>⚠️ 注意事项</h3>
+        <ul>
+          <li><span class="li-icon">🏔️</span>海拔循序渐进，稻城亚丁最高4600m，色达约4000m</li>
+          <li><span class="li-icon">🚗</span>雨季8月注意路况，折多山易堵车</li>
+          <li><span class="li-icon">📿</span>色达五明佛学院需提前预约</li>
+          <li><span class="li-icon">🚫</span>尊重当地宗教文化，寺庙内勿大声喧哗</li>
+          <li><span class="li-icon">🌧️</span>高原天气多变，备雨衣/雨伞</li>
+          <li><span class="li-icon">💧</span>多喝水、勿剧烈运动，预防高反</li>
+        </ul>
+      </div>
+      <div class="guide-card g3">
+        <h3>🍜 美食推荐</h3>
+        <ul>
+          <li><span class="li-icon">🥩</span>牦牛肉（风干/炖煮，高原特色）</li>
+          <li><span class="li-icon">🍵</span>酥油茶（御寒暖身，缓解高反）</li>
+          <li><span class="li-icon">🥟</span>糌粑（藏族主食，配酥油茶）</li>
+          <li><span class="li-icon">🍲</span>藏式土火锅（牦牛肉+高原蔬菜）</li>
+          <li><span class="li-icon">🍺</span>青稞酒（藏族待客之道）</li>
+          <li><span class="li-icon">🫖</span>甜茶（理塘/康定特色，奶茶风味）</li>
+        </ul>
+      </div>
+      <div class="guide-card g4">
+        <h3>🗓️ 最佳季节</h3>
+        <ul>
+          <li><span class="li-icon">🌸</span>3-5月：金川梨花如雪，草原新绿初萌</li>
+          <li><span class="li-icon">☀️</span>6-8月：草原翠绿，溪流充沛，避暑胜地</li>
+          <li><span class="li-icon">🍂</span>9-10月：彩林漫山，新都桥摄影黄金期</li>
+          <li><span class="li-icon">❄️</span>11-2月：雪景壮美，但部分路段封路</li>
+          <li><span class="li-icon">💰</span>预算参考：人均3000-5000元（7-10天）</li>
+          <li><span class="li-icon">🚙</span>建议自驾或包车，公共交通不便</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 底部 ===== -->
+<div class="footer">
+  <div class="footer-decoration">🏔️ 🌿 🏕️ 🌊 🛤️</div>
+  <p>川西旅行路线图鉴 · 自由编辑你的川西之旅</p>
+  <p style="margin-top:4px;font-size:12px;color:#999;">数据自动保存于本地浏览器</p>
+</div>
+
+<!-- ===== 添加旅行点模态框 ===== -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal">
+    <h3>✨ 添加旅行点</h3>
+    <div class="form-group">
+      <label>景点名称</label>
+      <input type="text" id="inputName" placeholder="如：折多山">
+    </div>
+    <div class="form-group">
+      <label>选择图标</label>
+      <div class="emoji-picker" id="emojiPicker">
+        <div class="emoji-option selected" data-emoji="🏔️">🏔️</div>
+        <div class="emoji-option" data-emoji="🏞️">🏞️</div>
+        <div class="emoji-option" data-emoji="🛕">🛕</div>
+        <div class="emoji-option" data-emoji="🌊">🌊</div>
+        <div class="emoji-option" data-emoji="🌲">🌲</div>
+        <div class="emoji-option" data-emoji="⛺">⛺</div>
+        <div class="emoji-option" data-emoji="🏯">🏯</div>
+        <div class="emoji-option" data-emoji="🌄">🌄</div>
+        <div class="emoji-option" data-emoji="🏳️">🏳️</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>海拔</label>
+        <input type="text" id="inputAlt" placeholder="如：4298m">
+      </div>
+      <div class="form-group">
+        <label>建议游玩</label>
+        <input type="text" id="inputTime" placeholder="如：2-3小时">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>类型</label>
+      <select id="inputType">
+        <option value="自然风光">自然风光</option>
+        <option value="人文宗教">人文宗教</option>
+        <option value="小镇村落">小镇村落</option>
+        <option value="观景平台">观景平台</option>
+        <option value="徒步线路">徒步线路</option>
+        <option value="美食休整">美食休整</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>推荐理由 / 攻略</label>
+      <textarea id="inputDesc" placeholder="简要描述景点的亮点和注意事项..."></textarea>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeAddModal()">取消</button>
+      <button class="btn-confirm" onclick="confirmAdd()">确认添加</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Toast ===== -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== 预设路线数据 =====
+const PRESET_ROUTES = {
+  small: {
+    name: "川西小环线",
+    duration: "3-5天",
+    difficulty: "入门",
+    distance: "约1200km",
+    season: "四季皆宜",
+    description: "成都出发，经四姑娘山、丹巴、新都桥返回，海拔循序渐进，适合首次进高原",
+    points: [
+      { emoji: "🏙️", name: "成都", alt: "500m", time: "出发地", type: "美食休整", desc: "川西旅行的起点城市。建议出发前补充物资、品尝火锅，做好行前准备。宽窄巷子、锦里值得一逛。" },
+      { emoji: "🏞️", name: "都江堰", alt: "730m", time: "2小时", type: "人文宗教", desc: "世界文化遗产，两千多年历史的水利工程。顺路经过，可短暂停留参观。" },
+      { emoji: "🏔️", name: "巴朗山", alt: "4480m", time: "1小时", type: "观景平台", desc: "巴朗山隧道海拔4480m，沿途可停车打卡云海和高山草甸，8月草甸翠绿，适合拍照。" },
+      { emoji: "🌄", name: "四姑娘山", alt: "3200m", time: "1天", type: "自然风光", desc: "蜀山皇后，双桥沟、长坪沟、海子沟三条沟各具特色。双桥沟全程观光车最轻松，长坪沟适合徒步。" },
+      { emoji: "🏯", name: "丹巴甲居藏寨", alt: "2000m", time: "半天", type: "小镇村落", desc: "中国最美乡村之一，红白相间的藏式民居散落山间。日出和黄昏是最佳拍摄时间。" },
+      { emoji: "🏔️", name: "墨石公园", alt: "3500m", time: "2-3小时", type: "自然风光", desc: "中国唯一糜棱岩土石林，黑色石林在阳光下极为出片，被称为异星地貌。" },
+      { emoji: "🌲", name: "新都桥", alt: "3300m", time: "半天", type: "自然风光", desc: "摄影家的天堂，光影与草原、溪流、藏式民居交织。秋季金黄杨树是最美季节。" },
+      { emoji: "🏔️", name: "折多山", alt: "4298m", time: "1小时", type: "观景平台", desc: "康巴第一关，翻越折多山垭口可远眺贡嘎雪山。注意易堵车，建议错峰通过。" },
+      { emoji: "🏙️", name: "成都", alt: "500m", time: "返回", type: "美食休整", desc: "环线返回成都，结束旅程。途中可经康定、泸定，听一曲康定情歌。" }
+    ]
+  },
+  large: {
+    name: "川西大环线",
+    duration: "7-10天",
+    difficulty: "进阶",
+    distance: "约2000km",
+    season: "6-10月",
+    description: "成都出发，串联四姑娘山、色达、稻城亚丁、新都桥等核心景点，不走回头路",
+    points: [
+      { emoji: "🏙️", name: "成都", alt: "500m", time: "出发地", type: "美食休整", desc: "川西大环线起点，建议提前一天到达，采购物资、适应状态。" },
+      { emoji: "🏞️", name: "映秀·卧龙", alt: "900m", time: "2小时", type: "自然风光", desc: "途经映秀地震遗址，卧龙大熊猫基地可短暂停留，了解熊猫保护工作。" },
+      { emoji: "🏔️", name: "四姑娘山", alt: "3200m", time: "1天", type: "自然风光", desc: "蜀山皇后，双桥沟观光车游览最轻松，长坪沟适合骑马或徒步。" },
+      { emoji: "🏯", name: "丹巴甲居藏寨", alt: "2000m", time: "半天", type: "小镇村落", desc: "中国最美乡村，藏式民居依山而建，晨雾中如仙境一般。" },
+      { emoji: "🛕", name: "色达五明佛学院", alt: "4000m", time: "1天", type: "人文宗教", desc: "世界上最大的藏传佛学院，漫山红房子震撼心灵。需提前预约，尊重当地宗教文化。" },
+      { emoji: "🏞️", name: "甘孜", alt: "3400m", time: "半天", type: "小镇村落", desc: "甘孜县城休整补给，可逛当地市场，感受藏族生活气息。" },
+      { emoji: "🌊", name: "措卡湖", alt: "3800m", time: "2-3小时", type: "自然风光", desc: "人间仙境，翠绿海子镶嵌在雪山之间，湖面如镜，倒影绝美。" },
+      { emoji: "🏔️", name: "理塘", alt: "4014m", time: "半天", type: "小镇村落", desc: "世界高城，天空之城。千户藏寨、长青春科尔寺值得探访，丁真的家乡。" },
+      { emoji: "🌊", name: "海子山", alt: "4500m", time: "1-2小时", type: "自然风光", desc: "古冰帽遗迹，1145个海子星罗棋布，荒凉壮美的外星地貌。" },
+      { emoji: "🏔️", name: "稻城亚丁", alt: "4600m", time: "2天", type: "徒步线路", desc: "蓝色星球最后一片净土。长线徒步至牛奶海、五色海（需3-4小时），短线至珍珠海。备氧气瓶。" },
+      { emoji: "🌲", name: "新都桥", alt: "3300m", time: "半天", type: "自然风光", desc: "摄影家的天堂，光影草原藏房。秋季金黄杨树最美，黄昏光线最佳。" },
+      { emoji: "🏔️", name: "折多山·康定", alt: "4298m", time: "2小时", type: "观景平台", desc: "康巴第一关，翻越垭口远眺贡嘎。康定城可休整，听康定情歌。" },
+      { emoji: "🏙️", name: "成都", alt: "500m", time: "返回", type: "美食休整", desc: "环线返回成都，全程约2000公里，不走回头路，圆满结束川西之旅。" }
+    ]
+  },
+  custom: {
+    name: "我的路线",
+    duration: "自由",
+    difficulty: "自定义",
+    distance: "待规划",
+    season: "自由",
+    description: "自由添加你感兴趣的旅行点，打造专属川西路线",
+    points: []
+  }
+};
+
+// ===== 状态管理 =====
+let currentRoute = 'small';
+let selectedEmoji = '🏔️';
+
+// 初始化：加载本地存储的自定义路线
+function loadCustomRoute() {
+  const saved = localStorage.getItem('chuanxi_custom_route');
+  if (saved) {
+    try {
+      PRESET_ROUTES.custom.points = JSON.parse(saved);
+    } catch(e) { console.warn('加载自定义路线失败', e); }
+  }
+}
+loadCustomRoute();
+
+// ===== 渲染路线信息 =====
+function renderRouteInfo() {
+  const route = PRESET_ROUTES[currentRoute];
+  const bar = document.getElementById('routeInfoBar');
+  bar.innerHTML = `
+    <div class="info-chip">⏱️ <span class="chip-label">${route.duration}</span></div>
+    <div class="info-chip">📏 <span class="chip-label">${route.distance}</span></div>
+    <div class="info-chip">📊 <span class="chip-label">${route.difficulty}</span></div>
+    <div class="info-chip">🗓️ <span class="chip-label">${route.season}</span></div>
+    <div class="info-chip">📍 <span class="chip-label">${route.points.length}个旅行点</span></div>
+  `;
+}
+
+// ===== 渲染路线流程图 =====
+function renderRouteFlow() {
+  const route = PRESET_ROUTES[currentRoute];
+  const container = document.getElementById('routeFlow');
+  if (route.points.length === 0) {
+    container.innerHTML = '<p style="color:#999;font-size:14px;">暂无旅行点，点击上方"+ 添加旅行点"开始规划</p>';
+    return;
+  }
+  let html = '';
+  route.points.forEach((p, i) => {
+    if (i > 0) html += '<span class="flow-arrow">→</span>';
+    html += `<span class="flow-node">${p.emoji} ${p.name}</span>`;
+  });
+  container.innerHTML = html;
+}
+
+// ===== 渲染旅行点列表 =====
+function renderPoints() {
+  const route = PRESET_ROUTES[currentRoute];
+  const container = document.getElementById('pointsList');
+
+  if (route.points.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1;">
+        <div class="empty-icon">🗺️</div>
+        <p>还没有旅行点</p>
+        <p class="empty-hint">点击右上角"+ 添加旅行点"开始规划</p>
+      </div>
+    `;
+    return;
+  }
+
+  let html = '';
+  route.points.forEach((p, i) => {
+    html += `
+      <div class="point-card">
+        <div class="card-top">
+          <div class="point-name">${p.emoji} ${p.name}</div>
+          <div class="point-emoji"></div>
+        </div>
+        <p class="point-desc">${p.desc}</p>
+        <div class="point-tags">
+          <span class="point-tag tag-alt">🏔️ ${p.alt}</span>
+          <span class="point-tag tag-time">⏱️ ${p.time}</span>
+          <span class="point-tag tag-type">📍 ${p.type}</span>
+        </div>
+        <div class="card-footer">
+          <span class="route-order">第 ${i+1} 站</span>
+          <button class="btn-delete" onclick="deletePoint(${i})">删除</button>
+        </div>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+}
+
+// ===== 切换路线 =====
+function switchRoute(routeKey) {
+  currentRoute = routeKey;
+  document.querySelectorAll('.route-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.route === routeKey);
+  });
+  renderRouteInfo();
+  renderRouteFlow();
+  renderPoints();
+}
+
+// ===== 删除旅行点 =====
+function deletePoint(index) {
+  const route = PRESET_ROUTES[currentRoute];
+  const pointName = route.points[index].name;
+  route.points.splice(index, 1);
+  if (currentRoute === 'custom') {
+    localStorage.setItem('chuanxi_custom_route', JSON.stringify(route.points));
+  }
+  renderRouteInfo();
+  renderRouteFlow();
+  renderPoints();
+  showToast(`已删除「${pointName}」`);
+}
+
+// ===== 打开/关闭添加模态框 =====
+function openAddModal() {
+  document.getElementById('addModal').classList.add('show');
+  // 清空输入
+  document.getElementById('inputName').value = '';
+  document.getElementById('inputAlt').value = '';
+  document.getElementById('inputTime').value = '';
+  document.getElementById('inputDesc').value = '';
+  document.getElementById('inputType').selectedIndex = 0;
+  selectedEmoji = '🏔️';
+  resetEmojiPicker();
+  setTimeout(() => document.getElementById('inputName').focus(), 100);
+}
+function closeAddModal() {
+  document.getElementById('addModal').classList.remove('show');
+}
+
+// ===== Emoji选择 =====
+function resetEmojiPicker() {
+  document.querySelectorAll('.emoji-option').forEach(el => {
+    el.classList.toggle('selected', el.dataset.emoji === selectedEmoji);
+  });
+}
+document.querySelectorAll('.emoji-option').forEach(el => {
+  el.addEventListener('click', () => {
+    selectedEmoji = el.dataset.emoji;
+    resetEmojiPicker();
+  });
+});
+
+// ===== 确认添加 =====
+function confirmAdd() {
+  const name = document.getElementById('inputName').value.trim();
+  const alt = document.getElementById('inputAlt').value.trim() || '未标注';
+  const time = document.getElementById('inputTime').value.trim() || '未标注';
+  const desc = document.getElementById('inputDesc').value.trim() || '暂无描述';
+  const type = document.getElementById('inputType').value;
+
+  if (!name) {
+    showToast('请输入景点名称');
+    return;
+  }
+
+  const newPoint = { emoji: selectedEmoji, name, alt, time, type, desc };
+
+  // 添加到当前路线
+  if (currentRoute !== 'custom') {
+    // 非自定义路线，自动切换到自定义
+    PRESET_ROUTES.custom.points = [...PRESET_ROUTES[currentRoute].points, newPoint];
+    currentRoute = 'custom';
+    document.querySelectorAll('.route-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.route === 'custom');
+    });
+    localStorage.setItem('chuanxi_custom_route', JSON.stringify(PRESET_ROUTES.custom.points));
+    showToast(`已添加「${name}」，已切换到"我的路线"`);
+  } else {
+    PRESET_ROUTES.custom.points.push(newPoint);
+    localStorage.setItem('chuanxi_custom_route', JSON.stringify(PRESET_ROUTES.custom.points));
+    showToast(`已添加「${name}」`);
+  }
+
+  closeAddModal();
+  renderRouteInfo();
+  renderRouteFlow();
+  renderPoints();
+}
+
+// ===== Toast 提示 =====
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+// ===== 点击遮罩关闭模态框 =====
+document.getElementById('addModal').addEventListener('click', function(e) {
+  if (e.target === this) closeAddModal();
+});
+
+// ===== ESC关闭 =====
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeAddModal();
+});
+
+// ===== 初始渲染 =====
+renderRouteInfo();
+renderRouteFlow();
+renderPoints();
+</script>
+</body>
+</html>
