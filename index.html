@@ -1,11 +1,16 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>川西旅行路线图鉴 · 插画风</title>
-<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
+  /* 字体回退：优先使用Google字体，网络不通时自动回退到系统字体 */
+  @font-face {
+    font-family: 'ZCOOL KuaiLe';
+    src: local('ZCOOL KuaiLe');
+    font-display: swap;
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
     --green-deep: #1B4332;
@@ -22,7 +27,7 @@
     --shadow-hover: 0 8px 30px rgba(45, 106, 79, 0.25);
   }
   body {
-    font-family: 'Noto Sans SC', sans-serif;
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
     background: linear-gradient(160deg, #E8F5E9 0%, #FFF3E0 40%, #E3F2FD 100%);
     color: var(--green-deep);
     min-height: 100vh;
@@ -159,7 +164,7 @@
     cursor: pointer;
     transition: all 0.3s;
     box-shadow: 0 4px 12px rgba(231,111,81,0.3);
-    font-family: 'Noto Sans SC', sans-serif;
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   }
   .btn-add:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(231,111,81,0.4); background: #D55A3E; }
 
@@ -247,7 +252,7 @@
     font-size: 13px;
     cursor: pointer;
     transition: all 0.2s;
-    font-family: 'Noto Sans SC', sans-serif;
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   }
   .btn-delete:hover { background: var(--coral); color: white; border-color: var(--coral); }
 
@@ -301,7 +306,7 @@
     border: 2px solid var(--green-pale);
     border-radius: 10px;
     font-size: 14px;
-    font-family: 'Noto Sans SC', sans-serif;
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
     background: white;
     color: var(--green-deep);
     transition: border-color 0.2s;
@@ -347,7 +352,7 @@
     border-radius: 10px;
     font-size: 15px;
     cursor: pointer;
-    font-family: 'Noto Sans SC', sans-serif;
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
     transition: background 0.2s;
   }
   .btn-cancel:hover { background: #E0E0E0; }
@@ -360,7 +365,7 @@
     border-radius: 10px;
     font-size: 15px;
     cursor: pointer;
-    font-family: 'Noto Sans SC', sans-serif;
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
     transition: background 0.2s;
   }
   .btn-confirm:hover { background: var(--green-deep); }
@@ -969,3 +974,4 @@ renderPoints();
 </script>
 </body>
 </html>
+
